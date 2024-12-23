@@ -1,0 +1,81 @@
+#text1 {
+    margin-right: 0px;
+    opacity: 1;
+    animation: slide 0.5s;
+}
+
+@keyframes slide {
+    from { opacity: 0; margin-right: -50px; }
+    to { opacity: 1; margin-right: 0px; }
+}
+
+#text2 {
+    margin-left: 0px;
+    opacity: 1;
+    animation: slide2 1s;
+}
+
+@keyframes slide2 {
+    from { opacity: 0; margin-left: -50px; }
+    to { opacity: 1; margin-left: 0px; }
+}
+
+@font-face {
+    font-family: "Giaza-Stencil";
+    src: url(/fonts/Giaza_Font/Giaza_Stencil.otf);
+}
+
+.giaza_stencil {
+    font-family: "Giaza-Stencil";
+}
+
+.loader img {
+    image-rendering: optimizeQuality;
+}
+
+.loader {
+    transform-origin: bottom right;
+}
+
+.glow-red {
+    box-shadow: 0 0 2.5px aliceblue, 0 0 5px aliceblue, 0 0 10px aliceblue; /* Glow effect */
+}
+
+.toolbar {
+    transform: scaleY(1);
+    animation: toolbar 0.4s ease-in-out;
+}
+
+@keyframes toolbar {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+.toolbar li {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-in-out 0.2s forwards; /* Delay matches the parent animation duration */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.logo-trsp {
+    animation: scale 0.5s;
+}
+
+@keyframes scale {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}

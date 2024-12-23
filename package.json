@@ -1,0 +1,19 @@
+{
+  "name": "christmas-gift",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "nodemon api/index.js",
+    "tailwindcss": "npx tailwindcss -i ./css/input.css -o ./css/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tejas Nayak",
+  "license": "ISC",
+  "dependencies": {
+    "christmas-gift": "file:",
+    "daisyui": "^4.12.22",
+    "express": "^4.21.2"
+  }
+}

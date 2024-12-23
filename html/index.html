@@ -1,0 +1,172 @@
+<html class="" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/uicons-solid-rounded/css/uicons-solid-rounded.css">
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/images/gift.png" type="image/png">
+    <meta name="description" content="Get your Christmas present from Santa's Warehouse!">
+    <script>
+        let theme = localStorage.theme;
+
+        if(theme) {
+            if(theme === "dark") {
+                document.documentElement.classList.add("dark");
+            }
+        } else {
+            localStorage.theme = "light";
+        }
+    </script>
+</head>
+<body class=" bg-gray-100 dark:bg-gray-950 overflow-hidden">
+    <div id="loader" class=" z-50 loader w-full h-full bg-gray-100 dark:bg-gray-950 hidden justify-center items-center md:p-72 pointer-events-none select-none p-0 relative">
+        <div class=" w-full aspect-video max-h-dvh overflow-hidden relative">
+            <img id="vid" loading="eager" src="/images/arise_loader_1.gif" alt="loader" class=" w-full aspect-video max-h-dvh mix-blend-exclusion object-contain absolute top-0 brightness-200 opacity-100">
+            <div class=" w-full h-full absolute top-0 flex md:gap-20 gap-8 justify-center items-center md:-ml-4 -ml-2 text-black dark:text-white">
+                <p id="text1" class=" md:text-9xl text-6xl font-bold opacity-0 giaza_stencil">AR</p>
+                <p id="text2" class=" md:text-9xl text-6xl font-bold opacity-0 giaza_stencil">SE</p>
+            </div>
+            <img id="image" loading="eager" src="/images/arise_loader_poster.png" alt="loader" class="w-full aspect-video max-h-dvh dark:invert-0 invert mix-blend-normal dark:mix-blend-screen object-contain absolute top-0 opacity-0">
+        </div>
+    </div>
+
+    <div id="main" class=" w-full h-full absolute top-0 z-30 max-h-dvh overflow-hidden hidden flex-col">
+        <div class="p-5 md:px-10 px-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+            <p class="md:text-4xl text-2xl giaza_stencil text-slate-800 dark:text-slate-200 select-none">Santa's Warehouse</p>
+            <div class=" flex text-slate-800 dark:text-slate-200">
+                <button id="toggle-theme" class="btn btn-square btn-ghost rounded-md">
+                    <i class=" fi fi-sr-brightness md:text-2xl text-xl dark:hidden block"></i>
+                    <i class=" fi fi-sr-moon md:text-2xl text-xl dark:block hidden"></i>
+                </button>
+                <a href="https://github.com/tejasnayak25" target="_blank" class="btn btn-square btn-ghost rounded-md">
+                    <img src="/images/github.svg" class=" md:h-6 h-5 aspect-square dark:invert invert-0">
+                </a>
+            </div>
+        </div>
+        <div class=" flex-1 flex flex-col w-full">
+            <div class="flex-1 flex md:flex-row flex-col-reverse w-full">
+                <div class=" md:border-r border-r-0 md:border-t-0 border-t border-slate-200 dark:border-slate-700 md:h-full h-auto md:w-64 w-full text-slate-700 dark:text-slate-300">
+                    <p class=" border-b border-slate-200 dark:border-slate-700 p-2.5 px-5 font-semibold">Greetings</p>
+                    <div class="p-2.5 px-5 w-full">
+                        <cite class="">"Wishing you and your loved ones a Christmas filled with joy, laughter, and warmth. May the magic of the season fill your heart and home, and may the new year bring countless blessings and happiness. Merry Christmas!"</cite>
+                    </div>
+                </div>
+                <div class="md:h-full h-auto md:w-auto relative w-full flex-1 overflow-hidden flex justify-center items-center">
+                    <div class=" absolute top-0 opacity-60 w-full h-full" style="background-image: url(/images/christmas_bg.webp);background-size: cover;background-position:  bottom;"></div>
+                    <div class=" absolute top-0 h-full md:aspect-square aspect-auto md:w-auto w-full">
+                        <img id="gift-box" src="/images/gift.png" alt="" class="object-contain absolute top-0">
+                        <div id="spinner" class=" w-full h-full absolute top-0 hidden justify-center items-center text-slate-200 dark:text-slate-200">
+                            <span class=" animate-spin flex justify-center items-center"><i class=" fi fi-sr-loading text-3xl"></i></span>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class=" flex md:gap-5 gap-2.5 border-t border-slate-200 dark:border-slate-700 p-5 md:px-10 px-5">
+                <input type="text" name="name" id="name" class="input flex-1 flex-shrink-0 min-w-0 rounded-full px-5" placeholder="Your Instagram ID...">
+                <div class=" flex md:gap-5 gap-2.5 text-slate-800 dark:text-slate-200">
+                    <button id="get-gift" class="btn btn-square btn-ghost rounded-md">
+                        <i class=" fi fi-sr-gift text-2xl"></i>
+                    </button>
+                    <button id="share" class="btn btn-square btn-ghost rounded-md">
+                        <i class=" fi fi-sr-share text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reward-win" class="absolute top-0 z-40 w-full h-full bg-slate-200 dark:bg-slate-800 bg-opacity-90 dark:bg-opacity-80 hidden justify-center items-center">
+        <div class=" md:w-2/3 w-full flex flex-col gap-10 p-10 items-center text-slate-700 dark:text-slate-300">
+            <p class=" text-4xl giaza_stencil">Merry Christmas</p>
+            <img id="image" src="/images/gift.png" class=" w-60 aspect-square rounded-full border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-950">
+            <cite id="message" class=" text-lg">"Message goes here..."</cite>
+
+            <div class=" flex gap-5">
+                <button id="share" class="btn btn-square btn-outline text-slate-700 dark:text-slate-300 border-slate-700 dark:border-slate-300 rounded-md">
+                    <i class=" fi fi-sr-share text-2xl"></i>
+                </button>
+                <button id="close" class="btn btn-square btn-outline text-slate-700 dark:text-slate-300 border-slate-700 dark:border-slate-300 rounded-md">
+                    <i class=" fi fi-sr-cross-small text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/anime.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let loadwin = document.getElementById("loader");
+
+            document.getElementById("main").classList.replace("hidden", "flex");
+
+            let giftBox = document.getElementById("gift-box");
+            let spinner = document.getElementById("spinner");
+            let getGift = document.getElementById("get-gift");
+            let rewardWin = document.getElementById("reward-win");
+            let rewards = {
+                image: rewardWin.querySelector("#image"),
+                message: rewardWin.querySelector("#message")
+            };
+            let name = document.getElementById("name");
+
+            rewardWin.querySelector("#close").onclick = () => {
+                rewardWin.classList.replace("flex", "hidden");
+            }
+
+            document.getElementById("main").querySelector("#share").onclick = () => {
+                navigator.share({
+                    url: location.origin,
+                    text: "Get your Christmas present from Santa's Warehouse!",
+                    title: "Santa's Warehouse"
+                });
+            }
+
+            getGift.onclick = () => {
+                if(name.value === "") {
+                    alert("Enter your name");
+                    return;
+                }
+                giftBox.classList.add("animate-pulse");
+                spinner.classList.replace("hidden", "flex");
+
+                fetch("/gifts", {
+                    method: "POST",
+                    body: JSON.stringify({ name: name.value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(res => {
+                    rewardWin.classList.replace("hidden", "flex");
+
+                    rewards.image.src = res.image;
+                    rewards.message.innerText = `"${res.message}"`;
+
+                    rewardWin.querySelector("#share").onclick = () => {
+                        navigator.share({
+                            url: location.origin,
+                            text: `I got a "${res.name}". Get your Christmas present from Santa's Warehouse!`,
+                            title: "Santa's Warehouse"
+                        });
+                    }
+                })
+                .catch(e => {
+                    alert("Oops! An error occurred! Try Again!");
+                })
+                .finally(() => {
+                    giftBox.classList.remove("animate-pulse");
+                    spinner.classList.replace("flex", "hidden");
+                });
+            }
+        });
+
+        document.getElementById("toggle-theme").onclick = () => {
+            document.documentElement.classList.toggle("dark");
+            localStorage.theme = localStorage.theme === "light" ? "dark" : "light";
+        }
+    </script>
+</body>
+</html>
