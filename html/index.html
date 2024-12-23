@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Santa's Warehouse</title>
     <link rel="stylesheet" href="/css/uicons-solid-rounded/css/uicons-solid-rounded.css">
     <link rel="stylesheet" href="/css/output.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -21,17 +21,6 @@
     </script>
 </head>
 <body class=" bg-gray-100 dark:bg-gray-950 overflow-hidden">
-    <div id="loader" class=" z-50 loader w-full h-full bg-gray-100 dark:bg-gray-950 hidden justify-center items-center md:p-72 pointer-events-none select-none p-0 relative">
-        <div class=" w-full aspect-video max-h-dvh overflow-hidden relative">
-            <img id="vid" loading="eager" src="/images/arise_loader_1.gif" alt="loader" class=" w-full aspect-video max-h-dvh mix-blend-exclusion object-contain absolute top-0 brightness-200 opacity-100">
-            <div class=" w-full h-full absolute top-0 flex md:gap-20 gap-8 justify-center items-center md:-ml-4 -ml-2 text-black dark:text-white">
-                <p id="text1" class=" md:text-9xl text-6xl font-bold opacity-0 giaza_stencil">AR</p>
-                <p id="text2" class=" md:text-9xl text-6xl font-bold opacity-0 giaza_stencil">SE</p>
-            </div>
-            <img id="image" loading="eager" src="/images/arise_loader_poster.png" alt="loader" class="w-full aspect-video max-h-dvh dark:invert-0 invert mix-blend-normal dark:mix-blend-screen object-contain absolute top-0 opacity-0">
-        </div>
-    </div>
-
     <div id="main" class=" w-full h-full absolute top-0 z-30 max-h-dvh overflow-hidden hidden flex-col">
         <div class="p-5 md:px-10 px-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
             <p class="md:text-4xl text-2xl giaza_stencil text-slate-800 dark:text-slate-200 select-none">Santa's Warehouse</p>
@@ -94,11 +83,8 @@
         </div>
     </div>
 
-    <script src="/js/anime.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            let loadwin = document.getElementById("loader");
-
             document.getElementById("main").classList.replace("hidden", "flex");
 
             let giftBox = document.getElementById("gift-box");
