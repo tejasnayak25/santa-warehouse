@@ -231,13 +231,13 @@
             let params = new URLSearchParams(location.search);
 
             if(params.has("data")) {
-                let res = JSON.parse(atob(params.get("data")));
+                let res = atob(params.get("data")).split(";");
 
                 rewardWin.classList.replace("hidden", "flex");
 
-                rewards.image.src = res.image;
-                rewards.message.innerText = `"${res.message}"`;
-                rewardWin.querySelector("#reward-sender").innerText = ` - From "${res.name}"`;
+                rewards.image.src = res[1];
+                rewards.message.innerText = `"${res[2]}"`;
+                rewardWin.querySelector("#reward-sender").innerText = ` - From "${res[0]}"`;
 
                 rewardWin.querySelector("#share").onclick = () => {
                     navigator.share({
