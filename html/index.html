@@ -162,7 +162,7 @@
 
                 let longUrl = `${location.origin}?data=${btoa(Object.values(data).join(";"))}`;
 
-                let shortUrl = shortenWithTinyURL(longUrl);
+                let shortUrl = await shortenWithTinyURL(longUrl);
 
                 if(shortUrl) {
                     navigator.clipboard.writeText(shortUrl);
