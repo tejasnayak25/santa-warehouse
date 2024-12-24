@@ -56,6 +56,9 @@
                 <input type="text" name="name" id="name" class="input flex-1 flex-shrink-0 min-w-0 rounded-full px-5" placeholder="Your Instagram ID...">
                 <div class=" flex md:gap-5 gap-2.5 text-slate-800 dark:text-slate-200">
                     <button id="get-gift" class="btn btn-square btn-ghost rounded-md">
+                        <i class=" fi fi-sr-paper-plane-top text-2xl"></i>
+                    </button>
+                    <button id="send-gift" class="btn btn-square btn-ghost rounded-md">
                         <i class=" fi fi-sr-gift text-2xl"></i>
                     </button>
                     <button id="share" class="btn btn-square btn-ghost rounded-md">
@@ -68,9 +71,9 @@
 
     <div id="reward-win" class="absolute top-0 z-40 w-full h-full bg-slate-200 dark:bg-slate-800 bg-opacity-90 dark:bg-opacity-80 hidden justify-center items-center">
         <div class=" md:w-2/3 w-full flex flex-col gap-10 p-10 items-center text-slate-700 dark:text-slate-300">
-            <p class=" text-4xl giaza_stencil">Merry Christmas</p>
+            <p class=" text-4xl giaza_stencil">Merry Christmas<span id="reward-sender"></span></p>
             <img id="image" src="/images/gift.png" class=" w-60 aspect-square rounded-full border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-950">
-            <cite id="message" class=" text-lg">"Message goes here..."</cite>
+            <cite id="message" class=" text-lg text-center">"Message goes here..."</cite>
 
             <div class=" flex gap-5">
                 <button id="share" class="btn btn-square btn-outline text-slate-700 dark:text-slate-300 border-slate-700 dark:border-slate-300 rounded-md">
@@ -83,13 +86,49 @@
         </div>
     </div>
 
+    <div id="send-reward-win" class="absolute top-0 z-40 w-full h-full bg-slate-200 dark:bg-slate-800 bg-opacity-90 dark:bg-opacity-80 hidden justify-center items-center">
+        <div class="md:w-1/2 w-full overflow-y-auto p-10">
+            <p class=" text-4xl giaza_stencil text-center mb-10">Christmas Gift</p>
+            <div class=" flex flex-col w-full gap-5 mb-10">
+                <input type="text" name="sender-name" id="sender-name" class="input rounded-full px-5" placeholder="Your name...">
+                <input type="url" name="image-url" id="image-url" class="input rounded-full px-5" placeholder="Image URL...">
+                <input type="text" name="gift-message" id="gift-message" class="input rounded-full px-5" placeholder="Message...">
+            </div>
+            <div class=" flex w-full justify-center gap-5">
+                <button id="link-gift" title="Copy Link" class="btn btn-square btn-outline text-slate-700 dark:text-slate-300 border-slate-700 dark:border-slate-300 rounded-md">
+                    <i class=" fi fi-sr-link text-2xl"></i>
+                </button>
+                <button id="close" class="btn btn-square btn-outline text-slate-700 dark:text-slate-300 border-slate-700 dark:border-slate-300 rounded-md">
+                    <i class=" fi fi-sr-cross-small text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        async function shortenWithTinyURL(longUrl) {
+            const apiUrl = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                throw new Error("Failed to shorten URL");
+                }
+                const shortUrl = await response.text();
+                return shortUrl;
+            } catch (error) {
+                console.error("Error shortening URL:", error);
+                return null;
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("main").classList.replace("hidden", "flex");
 
             let giftBox = document.getElementById("gift-box");
             let spinner = document.getElementById("spinner");
             let getGift = document.getElementById("get-gift");
+            let sendGift = document.getElementById("send-gift");
             let rewardWin = document.getElementById("reward-win");
             let rewards = {
                 image: rewardWin.querySelector("#image"),
@@ -97,8 +136,44 @@
             };
             let name = document.getElementById("name");
 
+            let sendWin = document.getElementById("send-reward-win");
+
+            let sendGiftData = {
+                name: sendWin.querySelector("#sender-name"),
+                image: sendWin.querySelector("#image-url"),
+                message: sendWin.querySelector("#gift-message")
+            }
+
             rewardWin.querySelector("#close").onclick = () => {
                 rewardWin.classList.replace("flex", "hidden");
+            }
+
+            sendWin.querySelector("#close").onclick = () => {
+                sendWin.classList.replace("flex", "hidden");
+            }
+
+            let linkBtn = sendWin.querySelector("#link-gift");
+            linkBtn.onclick = async () => {
+                let data = {
+                    name: sendGiftData.name.value,
+                    image: sendGiftData.image.value,
+                    message: sendGiftData.message.value
+                };
+
+                let longUrl = `${location.origin}?data=${btoa(Object.values(data).join(";"))}`;
+
+                let shortUrl = shortenWithTinyURL(longUrl);
+
+                if(shortUrl) {
+                    navigator.clipboard.writeText(shortUrl);
+                    linkBtn.querySelector("i").classList.replace("fi-sr-link", "fi-sr-check");
+
+                    setTimeout(() => {
+                        linkBtn.querySelector("i").classList.replace("fi-sr-check", "fi-sr-link");
+                    }, 1000);
+                } else {
+                    alert("Oops! An error occurred! Try Again!");
+                }
             }
 
             document.getElementById("main").querySelector("#share").onclick = () => {
@@ -107,6 +182,10 @@
                     text: "Get your Christmas present from Santa's Warehouse!",
                     title: "Santa's Warehouse"
                 });
+            }
+
+            sendGift.onclick = () => {
+                sendWin.classList.replace("hidden", "flex");
             }
 
             getGift.onclick = () => {
@@ -130,6 +209,7 @@
 
                     rewards.image.src = res.image;
                     rewards.message.innerText = `"${res.message}"`;
+                    rewardWin.querySelector("#reward-sender").innerText = ``;
 
                     rewardWin.querySelector("#share").onclick = () => {
                         navigator.share({
@@ -146,6 +226,26 @@
                     giftBox.classList.remove("animate-pulse");
                     spinner.classList.replace("flex", "hidden");
                 });
+            }
+        
+            let params = new URLSearchParams(location.search);
+
+            if(params.has("data")) {
+                let res = JSON.parse(atob(params.get("data")));
+
+                rewardWin.classList.replace("hidden", "flex");
+
+                rewards.image.src = res.image;
+                rewards.message.innerText = `"${res.message}"`;
+                rewardWin.querySelector("#reward-sender").innerText = ` - ${res.name}`;
+
+                rewardWin.querySelector("#share").onclick = () => {
+                    navigator.share({
+                        url: location.origin,
+                        text: `I got a "Gift". Get your Christmas present from Santa's Warehouse!`,
+                        title: "Santa's Warehouse"
+                    });
+                }
             }
         });
 
