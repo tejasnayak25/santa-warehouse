@@ -237,7 +237,7 @@
 
                 rewards.image.src = res.image;
                 rewards.message.innerText = `"${res.message}"`;
-                rewardWin.querySelector("#reward-sender").innerText = ` - ${res.name}`;
+                rewardWin.querySelector("#reward-sender").innerText = ` - From "${res.name}"`;
 
                 rewardWin.querySelector("#share").onclick = () => {
                     navigator.share({
