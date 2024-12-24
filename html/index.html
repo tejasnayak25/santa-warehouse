@@ -162,18 +162,22 @@
 
                 let longUrl = `${location.origin}?data=${btoa(Object.values(data).join(";"))}`;
 
-                let shortUrl = await shortenWithTinyURL(longUrl);
+                shortenWithTinyURL(longUrl)
+                .then((shortUrl) => {
+                    if(shortUrl) {
+                        navigator.clipboard.writeText(shortUrl);
+                        linkBtn.querySelector("i").classList.replace("fi-sr-link", "fi-sr-check");
 
-                if(shortUrl) {
-                    navigator.clipboard.writeText(shortUrl);
-                    linkBtn.querySelector("i").classList.replace("fi-sr-link", "fi-sr-check");
-
-                    setTimeout(() => {
-                        linkBtn.querySelector("i").classList.replace("fi-sr-check", "fi-sr-link");
-                    }, 1000);
-                } else {
+                        setTimeout(() => {
+                            linkBtn.querySelector("i").classList.replace("fi-sr-check", "fi-sr-link");
+                        }, 1000);
+                    } else {
+                        alert("Oops! An error occurred! Try Again!");
+                    }
+                })
+                .catch(e => {
                     alert("Oops! An error occurred! Try Again!");
-                }
+                });
             }
 
             document.getElementById("main").querySelector("#share").onclick = () => {
@@ -190,7 +194,7 @@
 
             getGift.onclick = () => {
                 if(name.value === "") {
-                    alert("Enter your name");
+                    alert("Enter your Instagram ID");
                     return;
                 }
                 giftBox.classList.add("animate-pulse");
