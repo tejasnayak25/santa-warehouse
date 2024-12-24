@@ -8304,10 +8304,6 @@ html:has(.drawer-open.drawer-open) {
   margin-bottom: 2.5rem;
 }
 
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
 .block {
   display: block;
 }
@@ -8562,6 +8558,11 @@ html:has(.drawer-open.drawer-open) {
      object-fit: contain;
 }
 
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .p-10 {
   padding: 2.5rem;
 }
@@ -8749,6 +8750,10 @@ html:has(.drawer-open.drawer-open) {
     height: 100%;
   }
 
+  .md\:w-1\/2 {
+    width: 50%;
+  }
+
   .md\:w-2\/3 {
     width: 66.666667%;
   }
@@ -8759,10 +8764,6 @@ html:has(.drawer-open.drawer-open) {
 
   .md\:w-auto {
     width: auto;
-  }
-
-  .md\:w-1\/2 {
-    width: 50%;
   }
 
   .md\:flex-row {
